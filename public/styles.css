@@ -108,7 +108,8 @@ header{
     width:100%;
     height:50px;
 }
-.textarea-standard{
+.textarea-standard,
+.input-standard{
     width:100%;
     height:50px;
     font-size:11pt;

@@ -15,16 +15,18 @@ let add_or_subtract = document.querySelector('.add-input');
 
 
 // 1 - client is required to add input
-add_or_subtract.addEventListener('click',generateInputByType)
-
-
-
-
+handleInputButton(add_or_subtract)
 
 
 
 
 /*============================================================== */
+// handle input button click
+function handleInputButton(btn){
+    btn.addEventListener('click',generateInputByType)
+}
+
+
 // add input
 function generateInputByType(e){
     let target = e.currentTarget;
@@ -76,6 +78,7 @@ function generateInputByType(e){
     }
 }
 
+
 // update button
 let button_count = 0;
 function updateButton(target){
@@ -93,7 +96,7 @@ function updateButton(target){
 // input type selection
 function inputTypeSelection(e){
     let target_element;
-    let target_question;
+    let target_question = document.createElement('input');
     let input = document.createElement('input')
     let textarea = document.createElement('textarea')
 
@@ -109,7 +112,7 @@ function inputTypeSelection(e){
     switch(true){
         case type == 'text':
             input.type = type;
-
+            decorateInput(input, {type:type,placeholder:'Text',classList:['input-standard']})
         break;
 
         case type == 'textarea':
@@ -120,17 +123,18 @@ function inputTypeSelection(e){
 
         case type == 'number':
             input.type = type;
+            decorateInput(input, {type:type,placeholder:'Number',classList:['input-standard']})
         
         break;
 
         default: console.log(undefined);
         break;
     }
-    target_question = input;
+    // target question
     decorateInput(target_question, {type:'text',placeholder:'Enter a Question',classList:['input-question']})
 
     target_element = target.getAttribute('data-element') == 'input' ? input : target.getAttribute('data-element') == 'textarea' ? textarea : console.log("check types");
-
+    target_element.setAttribute('disabled',true) // disable target inputs
     selects.map(x=>x.classList.add('absolute-type-select'))
 
 
@@ -139,8 +143,10 @@ function inputTypeSelection(e){
     parent_element.appendChild(target_question);
     parent_element.appendChild(target_element);
 
-}
 
+    // if target_question value 
+    target_question.oninput = handleQuestion
+}
 function decorateInput(element, options = {type:undefined,placeholder:undefined,classList:[]}){
     let {type,placeholder,classList} = options;
 
@@ -149,6 +155,43 @@ function decorateInput(element, options = {type:undefined,placeholder:undefined,
     element.classList = classList;
     classList.map(cls => element.classList.add(cls));
 }
+let add_form_column = false;
+function handleQuestion(e){
+    let target = e.currentTarget;
+    let parent = target.parentElement;
+    let button = parent.children[0];
+    if(add_form_column !== true && target.value && (target.value.length > 0 && target.value.length < 2)){
+        add_form_column = true;
+        console.log("activate new button!")
+        parent.removeChild(button);
+        appendFormItem(form) // append form item
+    } 
+    
+    if(target.value.length  < 1) {
+        add_form_column = false;
+        removeFormItem()
+    }
+
+    let newbutton = document.querySelector('.add-input');
+    handleInputButton(newbutton) // pass newbutton into function
+}
+function appendFormItem(form){
+    const divstring = `<div class="form-col div-col">
+                    <img src="./media/add.png" class="add-input" alt="add or plus">
+                </div>`
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(divstring,'text/html');
+    const divelement = doc.body.firstChild;
+
+    console.log(divelement)
+    form.appendChild(divelement)
+}
+function removeFormItem(){
+    let array = [...document.querySelectorAll('.form-col')];
+    return array.map((x,i) => i === array.length - 1 ? x.remove() : null);
+}
 /*============================================================== */
+
 
 
