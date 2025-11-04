@@ -89,11 +89,11 @@ header{
     width:25px;
 }
 .type-select{
-    height:30px;
-    width:30px;
+    height:50px;
+    width:50px;
 }
 .type-select:hover{
-    background-image:linear-gradient(20deg,rgb(255, 230, 0),#333 88%);
+    background-image:linear-gradient(20deg,rgb(255, 230, 0),#d1b78f 88%);
     transform:scale(.9);
     cursor:pointer;
 }
@@ -105,13 +105,21 @@ header{
 
 /* inputs  */
 .input-question{
-    width:100%;
+    width:60%;
     height:50px;
+    padding:.5rem 0 0 .25rem;
+    font-size:14pt;
+    font-weight:bold;
 }
 .textarea-standard,
 .input-standard{
-    width:100%;
+    width:40%;
     height:50px;
     font-size:11pt;
     resize:none;
+}
+.hide-button{
+    opacity:0;
+    pointer-events: none;
+    display:none;
 }

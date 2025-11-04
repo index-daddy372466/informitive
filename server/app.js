@@ -1,23 +1,36 @@
-const ex = require('express');
-const bp = require('body-parser')
-const path = require('path')
+require("dotenv").config({
+  path: require("path").resolve(__dirname, "../.env"),
+});
+const ex = require("express");
+const bp = require("body-parser");
+const path = require("path");
 const port = process.env.PORT || 3000;
+const { readFileSync } = require("node:fs");
 const dir = {
-    public:'../public'
-}
+  public: "../public",
+};
+const json_inputs = {
+    json:"json/inputTypes.json"
+};
 
 // plug express into app
 const app = ex();
 
-
-
 // middleware
 app.use(ex.static(path.resolve(__dirname, dir.public)));
-app.use(bp.urlencoded({extended:true}))
+app.use(bp.urlencoded({ extended: true }));
 
-
-
+// api
+app.route("/input-types").get((req, res) => {
+  // method
+    let readjson = readFileSync(
+    require("path").resolve(__dirname, json_inputs.json),
+    "utf-8"
+  );
+  readjson = JSON.parse(readjson);
+  res.json(readjson);
+});
 // listen on app
-app.listen(port,() => {
-    console.log('Listening on port ' + port)
-})
+app.listen(port, () => {
+  console.log("Listening on port " + port);
+});
