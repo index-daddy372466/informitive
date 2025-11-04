@@ -18,6 +18,7 @@ handleInputButton(document.querySelector('.add-input'))
 
 // handle input button click
 function handleInputButton(btn = document.querySelector('.add-input')){
+    let alllines = document.querySelectorAll('.add-input');
     button_count = 0;
     btn.addEventListener('click',generateInputByType)
     let previous_sibling
@@ -29,9 +30,11 @@ function handleInputButton(btn = document.querySelector('.add-input')){
         let question = [...previous_sibling.children][previous_sibling.children.length - 2]
         question.focus();
         question.onblur = disableElement
-
+        question.onclick = e => console.log("positive result on question")
         // if button is minus
-        if(btn.src.split`/`.find(x=>x=='add.png')){
+        console.log(alllines)
+        console.log(alllines[1])
+        if(alllines[alllines.length - 1].src.split`/`.find(x=>x=='add.png')){
             enableElement(question)
         }
     }
@@ -96,6 +99,28 @@ function updateButton(target){
 
     // update src by button count
     target.src = array[button_count]
+
+    let previous_children = target.parentElement.previousSibling.children;
+
+    if(previous_children){
+        // check if previous question is disabled
+    if(button_count % 2 === 0) { // if plus
+            let question = [...target.parentElement.previousSibling.children]
+            .find(child => child.classList.contains('input-question'))||undefined
+            if(question){
+                enableElement(question);
+            }
+    } else { // if minus
+            let question = [...target.parentElement.previousSibling.children]
+            .find(child => child.classList.contains('input-question'))||undefined
+            
+            if(question) {
+                disableElement(question)
+        }
+
+    }
+    }
+    
     return button_count
 }
 // input type selection
@@ -150,7 +175,7 @@ function inputTypeSelection(e){
 
     // if target_question value
     target_question.focus();
-    target_question.oninput = handleQuestion
+    target_question.oninput = e => handleQuestion(e);
 }
 
 // disable element
@@ -175,9 +200,10 @@ function decorateInput(element, options = {type:undefined,placeholder:undefined,
 
 let row_lock = false;
 // handle question
-function handleQuestion(e){
-
+function handleQuestion(e = document.querySelector('.input-question')){
+    console.log(row_lock)
     let target = e.currentTarget;
+    console.log(target)
     let parent = target.parentElement;
     let button = [...parent.children].find(x=>x.classList.contains('add-input'))
 
@@ -216,10 +242,14 @@ function removeFormItem(){
     return array.map((x,i) => {
         let divs = [array.length - 1, array.length - 2]
         if(i === divs[0]){
-            x.remove()
+            x.remove();
         };
         if(i === divs[1]){
             console.log(x)
+            // button reappears
+            let [btn,question] = [[...x.children].find(y => y.classList.contains('add-input')),[...x.children].find(y => y.classList.contains('input-question'))]
+            btn.classList.remove('hide-button')
+            enableElement(question)
         }
     });
 }
