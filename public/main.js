@@ -125,6 +125,8 @@ function updateButton(target){
 }
 // input type selection
 function inputTypeSelection(e){
+    // set row_lock to false
+    row_lock = false;
     let target_element;
     let target_question = document.createElement('input');
     let input = document.createElement('input')
