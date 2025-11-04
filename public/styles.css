@@ -1,3 +1,7 @@
+@font-face {
+    font-family: 'fancy-cursive';
+    src: url('./fonts/GreatVibes-Regular.ttf');
+}
 *{
     margin:0;
     padding:0;
@@ -38,6 +42,9 @@ body{
     height:65px;
     position:relative;
 }
+input, textarea {
+border-radius: 12px; 
+}
 .add-input:hover{
     transition: .75s;
     cursor:pointer;
@@ -49,6 +56,7 @@ body{
     width:50px;
 }
 header{
+    margin: 0 0 1.5rem 0;
     width:100%;
     height:85px;
     /* border:2px solid red; */
@@ -60,11 +68,24 @@ header{
     width:100%;
     height:100%;
 }
+
 #title-logo > h1 {
-    font-family: Arial, Helvetica, sans-serif;
+    /* font-family: Arial, Helvetica, sans-serif; */
+    font-family: 'fancy-cursive', Arial, Helvetica, sans-serif;;
     color:#fff;
+    font-size:48pt;
     text-align: center;
     margin:2.5rem 0 0 0;
+    letter-spacing:1.5px;
+    animation:poptitle .75s forwards ease-out;
+}
+@keyframes poptitle {
+    from {
+        transform:scale(.85);
+    }
+    to{
+        transform:scale(1);
+    }
 }
 #toolbar-container{
     height:30px;
@@ -102,18 +123,31 @@ header{
 
 /* inputs  */
 .input-question{
+    transition:.25s;
     width:60%;
     height:50px;
     padding:.5rem 0 0 .25rem;
     font-size:14pt;
     font-weight:bold;
+    outline:none;
+}
+.input-question:focus{
+    background-color: rgb(242, 235, 225);
 }
 .textarea-standard,
 .input-standard{
     width:40%;
     height:50px;
     font-size:11pt;
-    resize:none;
+    padding:.5rem .25rem;
+    resize:none !important;
+}
+.submit-standard{
+    padding:.5rem 1.5rem;
+    background:#000;
+    color:#fff;
+    font-size:14pt;
+    font-family: 'fancy-cursive',Arial, Helvetica, sans-serif;
 }
 .hide-button{
     opacity:0;

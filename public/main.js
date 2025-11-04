@@ -1,5 +1,8 @@
+// imports 
+import { events } from "./event/window.js";
+const { click } = events;
+
 // variables
-// import types
 const types = await fetch('input-types').then(r => r.json()).then(d => d['types'])
 console.log(types)
 const form = document.getElementById('form')
@@ -12,6 +15,10 @@ let button_count = 0;
 handleInputButton(document.querySelector('.add-input'))
 
 
+/*========================Window Events======================= */
+window.onclick = click;
+
+/*========================Window Events======================= */
 
 
 /*============================================================== */
@@ -49,6 +56,16 @@ function generateInputByType(e){
     if(getcount > 0){
         if(div.children.length <= 1){
             for(let property in types) {
+                
+                /*---------------------------*/
+                // handle option to release [submit] button/option
+                // if(document.querySelectorAll('.input-question') && document.querySelectorAll('.input-question').length >= 1){
+                //     if(property === 'submit'){
+                //         types[property]['disabled'] = false;
+                //     }
+                // }
+                /*---------------------------*/
+
                 if(!types[property]['disabled']){
                     let src_image = `./media/${types[property]['t']}.png` // format source image
                     let img = new Image(); // create new image instance
@@ -159,6 +176,12 @@ function inputTypeSelection(e){
 
         break;
 
+        case type == 'submit':
+            input.type = type;
+            decorateInput(input, {type:type,placeholder:undefined,classList:['submit-standard']})
+
+        break;
+
         default: console.log(undefined);
         break;
     }
@@ -187,7 +210,7 @@ function disableElement(event){
     element.setAttribute('disabled',true)
 }
 // enable element
-function enableElement(element){
+export function enableElement(element){
     element.removeAttribute('disabled')
 }
 // decorate input
@@ -203,13 +226,11 @@ function decorateInput(element, options = {type:undefined,placeholder:undefined,
 let row_lock = false;
 // handle question
 function handleQuestion(e = document.querySelector('.input-question')){
-    console.log(row_lock)
     let target = e.currentTarget;
-    console.log(target)
     let parent = target.parentElement;
     let button = [...parent.children].find(x=>x.classList.contains('add-input'))
 
-    if(row_lock !== true && target.value && (target.value.length > 0)){
+    if(row_lock !== true && target.value && (target.value.length > 0) && !parent.nextSibling){
         let d = appendFormItem(form) // append form item
         let newbutton = d.children[0];
         button.classList.add('hide-button');
