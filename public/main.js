@@ -1,6 +1,6 @@
 // imports 
 import { events } from "./event/window.js";
-const { click } = events;
+const { click, change } = events;
 
 // variables
 const types = await fetch('input-types').then(r => r.json()).then(d => d['types'])
@@ -17,6 +17,7 @@ handleInputButton(document.querySelector('.add-input'))
 
 /*========================Window Events======================= */
 window.onclick = click;
+window.onchange = change;
 
 /*========================Window Events======================= */
 
@@ -56,7 +57,7 @@ function generateInputByType(e){
     if(getcount > 0){
         if(div.children.length <= 1){
             for(let property in types) {
-                
+
                 /*---------------------------*/
                 // handle option to release [submit] button/option
                 // if(document.querySelectorAll('.input-question') && document.querySelectorAll('.input-question').length >= 1){

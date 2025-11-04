@@ -2,7 +2,8 @@ import { enableElement } from "../main.js";
 export const events = {
     click: handleClick,
     resize: handleResize,
-    scroll: handleScroll
+    scroll: handleScroll,
+    change: handleChange,
 }
 let counter = 0;
 function handleClick(e){
@@ -31,4 +32,8 @@ return null;
 function handleScroll(e){
     // method
 return null;
+}
+function handleChange(e){
+    // method
+console.log('something changed')
 }
