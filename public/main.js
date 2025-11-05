@@ -124,6 +124,7 @@ function updateButton(target){
     if(previous_children){
         // check if previous question is disabled
     if(button_count % 2 === 0) { // if plus
+        row_lock = true;
         form.removeChild(submitbtn)
 
             let question = [...target.parentElement.previousSibling.children]
@@ -139,7 +140,7 @@ function updateButton(target){
             
             if(question) {
                 console.log(question)
-                // disableElement(question)
+                question.value.length > 0 ? disableElement(question) : null;
         }
     }
     }
@@ -242,8 +243,12 @@ function decorateInput(element, options = {type:undefined,placeholder:undefined,
 }
 
 let row_lock = false;
+
+
 // handle question
 function handleQuestion(e = document.querySelector('.input-question')){
+    console.log("ROW LOCK")
+    console.log(row_lock)
     let target = e.currentTarget;
     let parent = target.parentElement;
     let button = [...parent.children].find(x=>x.classList.contains('add-input'))
@@ -254,7 +259,7 @@ function handleQuestion(e = document.querySelector('.input-question')){
         handleInputButton(newbutton)
     }
     if(target.value.length  < 1) {
-        form.removeChild(submitbtn)
+        if(document.getElementById('submit-btn'))form.removeChild(submitbtn)
         button.classList.remove('hide-button');
         removeFormItem();
         row_lock = false;
@@ -266,7 +271,7 @@ function handleQuestion(e = document.querySelector('.input-question')){
 /*================================ */
 // append form item
 function appendFormItem(form){
-  row_lock = true;
+  row_lock = false;
   const divcolumn = `<div class="form-col div-col">
                     <img src="./media/add.png" class="add-input" alt="add or plus">
                 </div>`;
