@@ -29,9 +29,13 @@ function handleResize(e){
     // method
 return null;
 }
+let pos = {x:undefined,y:undefined};
 function handleScroll(e){
     // method
-return null;
+    let scrollY = e.scrollY;
+    pos.y = scrollY;
+
+    console.log(pos.y)
 }
 function handleChange(e){
     // method

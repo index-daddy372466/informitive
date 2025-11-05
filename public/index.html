@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./ripple.css"/>
     <link rel="stylesheet" href="./styles.css"/>
-    <title>formative</title>
+    <title>inFormative</title>
 </head>
 <body>
 
@@ -18,22 +19,27 @@
             </ul>
         </div>
         <a href="#" id="title-logo">
-            <h1>Formative</h1>
+            <h1>inFormative</h1>
         </a>
     </header>
     
     <!-- form container -->
     <div id="form-container">
             <!-- form -->
-            <form action="/form-create" id="form" method="POST" class="main-form form-main">
+            <form action="/form/create" id="form" method="POST" class="main-form form-main" enctype="multipart/form-data">
                 <div class="form-col div-col">
                     <!-- button -->
                     <img src="./media/add.png" class="add-input" alt="add or plus">
                     <!-- list of options by type -->
                 </div>
+                <!-- submit button -->
+                <input id="submit-btn" class="ripple-button" type="submit" value="Submit">
             </form>
+
     </div>
+    <!-- <div id="test-space"></div> -->
     
     <script type="module" src="main.js"></script>
+    <script type="module" src="ripple.js"></script>
 </body>
 </html>

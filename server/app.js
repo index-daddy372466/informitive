@@ -30,6 +30,12 @@ app.route("/input-types").get((req, res) => {
   readjson = JSON.parse(readjson);
   res.json(readjson);
 });
+
+app.route('/form/create').post((req,res) => {
+    // const {text,textarea,number} = req.body;
+    console.log(req.body)
+    res.json(req.body)
+})
 // listen on app
 app.listen(port, () => {
   console.log("Listening on port " + port);

@@ -1,3 +1,9 @@
+.no-highlight {
+  user-select: none;
+  -webkit-user-select: none; /* For Safari */
+  -moz-user-select: none; /* For Firefox */
+  -ms-user-select: none; /* For Internet Explorer/Edge */
+}
 @font-face {
     font-family: 'fancy-cursive';
     src: url('./fonts/GreatVibes-Regular.ttf');
@@ -12,7 +18,8 @@
 body{
     background:#000;
     width:100%;
-    height:100vh;
+    /* height:100vh; */
+    height:100%;
     display:flex;
     flex-direction: column;
     align-items: center;
@@ -31,10 +38,11 @@ body{
     align-items: start;
     justify-content: start;
     overflow:hidden;
+    gap:1rem;
 }
 .form-col {
     padding:0 0 .25rem 0;
-    border-bottom:.5px solid #fff;
+    border-bottom:.25px solid #fff;
     display:flex;
     align-items: center;
     gap:1.75rem;
@@ -44,7 +52,9 @@ body{
 }
 input, textarea {
 border-radius: 12px; 
+border:none;
 }
+
 .add-input:hover{
     transition: .75s;
     cursor:pointer;
@@ -110,10 +120,14 @@ header{
     height:50px;
     width:50px;
 }
-.type-select:hover{
+.type-select:hover,
+#submit-btn:hover{
     background-image:linear-gradient(20deg,rgb(255, 230, 0),#d1b78f 88%);
     transform:scale(.9);
     cursor:pointer;
+}
+#submit-btn:hover{
+    color:#000;
 }
 .absolute-type-select{
     position:absolute;
@@ -123,7 +137,7 @@ header{
 
 /* inputs  */
 .input-question{
-    transition:.25s;
+    /* transition:.25s; */
     width:60%;
     height:50px;
     padding:.5rem 0 0 .25rem;
@@ -136,7 +150,7 @@ header{
 }
 .textarea-standard,
 .input-standard{
-    width:40%;
+    width:105px;
     height:50px;
     font-size:11pt;
     padding:.5rem .25rem;
@@ -153,4 +167,43 @@ header{
     opacity:0;
     pointer-events: none;
     display:none;
+}
+
+
+#test-space { 
+    height:2000px;
+    width:100%;
+    background:red;
+}
+
+#submit-btn{
+    padding:.5rem 1.5rem;
+    border-radius: 8px;
+    font-family: 'fancy-cursive',Arial, Helvetica, sans-serif;
+    letter-spacing: 1.5px;
+    font-size:14pt;
+}
+
+
+/* ripple */
+
+.ripple-button {
+  position: relative; /* Crucial for positioning the ripple */
+  overflow: hidden;   /* Hides the ripple outside the button boundaries */
+  /* Add other button styles like background, padding, font, etc. */
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.7); /* Translucent white ripple */
+  transform: scale(0); /* Initially hidden */
+  animation: ripple-animation 0.6s linear forwards; /* Animation properties */
+}
+
+@keyframes ripple-animation {
+  to {
+    transform: scale(3); /* Grow the ripple */
+    opacity: 0;         /* Fade out the ripple */
+  }
 }

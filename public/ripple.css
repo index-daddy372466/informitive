@@ -1,0 +1,20 @@
+.ripple-button {
+  position: relative; /* Crucial for positioning the ripple */
+  overflow: hidden;   /* Hides the ripple outside the button boundaries */
+  /* Add other button styles like background, padding, font, etc. */
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.7); /* Translucent white ripple */
+  transform: scale(0); /* Initially hidden */
+  animation: ripple-animation 0.6s linear forwards; /* Animation properties */
+}
+
+@keyframes ripple-animation {
+  to {
+    transform: scale(3); /* Grow the ripple */
+    opacity: 0;         /* Fade out the ripple */
+  }
+}

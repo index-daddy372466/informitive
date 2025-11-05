@@ -1,11 +1,12 @@
 // imports 
 import { events } from "./event/window.js";
-const { click, change } = events;
+const { click, change, scroll } = events;
 
 // variables
 const types = await fetch('input-types').then(r => r.json()).then(d => d['types'])
 console.log(types)
 const form = document.getElementById('form')
+const submitbtn = document.getElementById('submit-btn')
 let button_count = 0;
 
 
@@ -18,6 +19,7 @@ handleInputButton(document.querySelector('.add-input'))
 /*========================Window Events======================= */
 window.onclick = click;
 window.onchange = change;
+window.onscroll = scroll;
 
 /*========================Window Events======================= */
 
@@ -73,7 +75,7 @@ function generateInputByType(e){
 
                     // set classes
                     div.classList.add('add-input-select')
-                    img.classList.add('type-select')
+                    img.classList.add('type-select','no-highlight')
                     img.setAttribute('data-element',property=='textarea' ? 'textarea' : 'input')
 
                     // set src
@@ -150,7 +152,11 @@ function inputTypeSelection(e){
     let input = document.createElement('input')
     let textarea = document.createElement('textarea')
 
+    // target question - require value
+    requireValue(target_question)
+
     let selects = [...document.querySelectorAll('.type-select')]
+
 
     const target = e.currentTarget; // target
     let parent_element = target.parentElement; // parent of target
@@ -190,6 +196,8 @@ function inputTypeSelection(e){
     decorateInput(target_question, {type:'text',placeholder:'Enter a Question',classList:['input-question']})
 
     target_element = target.getAttribute('data-element') == 'input' ? input : target.getAttribute('data-element') == 'textarea' ? textarea : console.log("check types");
+    target_element.name = "element_" + type;
+    target_question.name = "question_text"
     selects.map(x=>x.classList.add('absolute-type-select'))
     disableElement(target_element)
 
@@ -209,6 +217,12 @@ function disableElement(event){
     const element = event.currentTarget || event;
     console.log(element)
     element.setAttribute('disabled',true)
+}
+// require value
+function requireValue(event){
+    const element = event.currentTarget || event;
+    console.log(element)
+    element.setAttribute('required',true)
 }
 // enable element
 export function enableElement(element){
@@ -244,7 +258,6 @@ function handleQuestion(e = document.querySelector('.input-question')){
     }
 }
 
-
 /*================================ */
 // append form item
 function appendFormItem(form){
@@ -279,7 +292,30 @@ function removeFormItem(){
 }
 /*================================ */
 
+form.onsubmit = handleSubmit;
 
+// submit the form
+async function handleSubmit(e){
+    e.preventDefault() // prevent default action
+    const aq = document.querySelectorAll('.input-question'); // aq = all_questions
+    const iT = document.querySelectorAll('.input-standard'); // aq = input_type
+    let payload = {};
+    for(let i = 0; i < aq.length; i ++){
+        let [prop,val] = [aq[i].name + (i+1) ,!iT[i] ? 'textarea' : iT[i].getAttribute('type')] // temporary capture (will fork later);
+        
+        payload[prop] = {
+            value:aq[i].value,
+            input_type:val
+        };
+        console.log(" ")
+    }
+        console.log(payload)
+
+    await fetch('/form/create',{method:'POST',headers: {
+        'Content-Type': 'application/json'
+      }, body:JSON.stringify(payload)})
+
+}
 
 
 /*============================================================== */

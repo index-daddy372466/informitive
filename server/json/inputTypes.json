@@ -1,36 +1,38 @@
+
 {
-  "types": {
-    "text": {
-      "t": "text",
-      "disabled": false
-    },
-    "textarea": {
-      "t": "textarea",
-      "disabled": false
-    },
-    "number": {
-      "t": "number",
-      "disabled": false
-    },
-    "submit": {
-      "t": "submit",
-      "disabled": true
-    },
-    "checkbox": {
-      "t": "checkbox",
-      "disabled": true
-    },
-    "radio": {
-      "t": "radio",
-      "disabled": true
-    },
-    "email": {
-      "t": "email",
-      "disabled": true
-    },
-    "date": {
-      "t": "date",
-      "disabled": true
+"types":
+    {
+        "text":{
+            "t":"text",
+            "disabled":false
+        },
+        "textarea":{
+            "t":"textarea",
+            "disabled":false
+        },
+        "number":{
+            "t":"number",
+            "disabled":false
+        },
+        "submit":{
+            "t":"submit",
+            "disabled":true
+        },
+        "checkbox":{
+            "t":"checkbox",
+            "disabled":true
+        },
+        "radio":{
+            "t":"radio",
+            "disabled":true
+        },
+        "email":{
+            "t":"email",
+            "disabled":true
+        },
+        "date":{
+            "t":"date",
+            "disabled":true
+        }
     }
-  }
 }
