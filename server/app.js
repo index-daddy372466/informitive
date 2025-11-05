@@ -18,6 +18,8 @@ const app = ex();
 
 // middleware
 app.use(ex.static(path.resolve(__dirname, dir.public)));
+app.use(ex.json())
+app.use(ex.urlencoded({extended:true}))
 app.use(bp.urlencoded({ extended: true }));
 
 // api

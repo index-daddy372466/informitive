@@ -31,10 +31,9 @@ function handleInputButton(btn = document.querySelector('.add-input')){
     let alllines = document.querySelectorAll('.add-input');
     button_count = 0;
     btn.addEventListener('click',generateInputByType)
+    let parent = btn.parentElement;
     let previous_sibling
 
-    // if a form-col exists before parent
-    let parent = btn.parentElement;
     if(parent.previousSibling && parent.previousSibling.children){
         previous_sibling = parent.previousSibling;
         let question = [...previous_sibling.children][previous_sibling.children.length - 2]
@@ -125,19 +124,23 @@ function updateButton(target){
     if(previous_children){
         // check if previous question is disabled
     if(button_count % 2 === 0) { // if plus
+        form.removeChild(submitbtn)
+
             let question = [...target.parentElement.previousSibling.children]
             .find(child => child.classList.contains('input-question'))||undefined
             if(question){
                 enableElement(question);
             }
     } else { // if minus
+        form.appendChild(submitbtn)
+
             let question = [...target.parentElement.previousSibling.children]
             .find(child => child.classList.contains('input-question'))||undefined
             
             if(question) {
-                disableElement(question)
+                console.log(question)
+                // disableElement(question)
         }
-
     }
     }
     
@@ -244,7 +247,6 @@ function handleQuestion(e = document.querySelector('.input-question')){
     let target = e.currentTarget;
     let parent = target.parentElement;
     let button = [...parent.children].find(x=>x.classList.contains('add-input'))
-
     if(row_lock !== true && target.value && (target.value.length > 0) && !parent.nextSibling){
         let d = appendFormItem(form) // append form item
         let newbutton = d.children[0];
@@ -252,26 +254,32 @@ function handleQuestion(e = document.querySelector('.input-question')){
         handleInputButton(newbutton)
     }
     if(target.value.length  < 1) {
+        form.removeChild(submitbtn)
         button.classList.remove('hide-button');
         removeFormItem();
         row_lock = false;
+
+        console.log(target)
     }
 }
 
 /*================================ */
 // append form item
 function appendFormItem(form){
-    row_lock = true;
-    const divcolumn = `<div class="form-col div-col">
+  row_lock = true;
+  const divcolumn = `<div class="form-col div-col">
                     <img src="./media/add.png" class="add-input" alt="add or plus">
-                </div>`
+                </div>`;
 
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(divcolumn,'text/html');
-    const divelement = doc.body.firstChild;
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(divcolumn, "text/html");
+  const divelement = doc.body.firstChild;
 
-    form.appendChild(divelement)
-    return divelement
+  // append form items
+    form.appendChild(divelement);
+    form.appendChild(submitbtn)
+
+  return divelement;
 }
 // remove form item
 function removeFormItem(){
@@ -307,11 +315,9 @@ async function handleSubmit(e){
             value:aq[i].value,
             input_type:val
         };
-        console.log(" ")
     }
-        console.log(payload)
 
-    await fetch('/form/create',{method:'POST',headers: {
+    const response = await fetch('/form/create',{method:'POST',headers: {
         'Content-Type': 'application/json'
       }, body:JSON.stringify(payload)})
 
