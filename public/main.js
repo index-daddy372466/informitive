@@ -50,6 +50,7 @@ function handleInputButton(btn = document.querySelector('.add-input')){
 }
 // add input
 function generateInputByType(e){
+    console.log('1. generate input by type')
     let target = e.currentTarget;
     let getcount = +(updateButton(target)) // return count from function
     let div = target.parentElement // create new div element
@@ -91,7 +92,10 @@ function generateInputByType(e){
                 if(child.localName == 'input' || child.localName == 'textarea'){
                     child.remove();
                 }
-                child.classList.remove('absolute-type-select')
+                if(child.classList.contains('type-select') && child.classList.contains('no-pointer')){
+                    child.remove();
+                }
+                child.classList.remove('absolute-type-select');
             })
         }
 
@@ -126,6 +130,8 @@ function updateButton(target){
     if(button_count % 2 === 0) { // if plus
         row_lock = true;
         form.removeChild(submitbtn)
+        console.log("add!")
+
 
             let question = [...target.parentElement.previousSibling.children]
             .find(child => child.classList.contains('input-question'))||undefined
@@ -134,6 +140,7 @@ function updateButton(target){
             }
     } else { // if minus
         form.appendChild(submitbtn)
+        console.log("minus!")
 
             let question = [...target.parentElement.previousSibling.children]
             .find(child => child.classList.contains('input-question'))||undefined
@@ -149,62 +156,63 @@ function updateButton(target){
 }
 // input type selection
 function inputTypeSelection(e){
+    console.log('2. Input type selection')
+
+    const target = e.currentTarget; // target
+
     // set row_lock to false
     row_lock = false;
-    let target_element;
+    let target_element = target.cloneNode(true) || undefined;
+
     let target_question = document.createElement('input');
-    let input = document.createElement('input')
-    let textarea = document.createElement('textarea')
 
     // target question - require value
     requireValue(target_question)
 
+    // process image classes
+    target_element.classList.add('type-select','no-highlight','input-standard')
+
     let selects = [...document.querySelectorAll('.type-select')]
 
 
-    const target = e.currentTarget; // target
     let parent_element = target.parentElement; // parent of target
     let split = target.src.split`/`;
     let type = split[split.length - 1].slice(0,-4);
 
+    target_element.setAttribute('data-input-id',type);
+    target_element.classList.add('no-pointer')
+    target_element.classList.remove('absolute-target-element')
+    console.log(target_element)
+
     // switch between types selected
+    // switch(true){
+    //     case type == 'text':
 
-    switch(true){
-        case type == 'text':
-            input.type = type;
-            decorateInput(input, {type:type,placeholder:'Text',classList:['input-standard']})
-        break;
+    //     break;
 
-        case type == 'textarea':
-            // textarea.classList.add('textarea-standard')
-            decorateInput(textarea, {type:type,placeholder:`${type[0].toUpperCase()+type.slice(1,type.length)}`,classList:['textarea-standard']})
+    //     case type == 'textarea':
 
-        break;
+    //     break;
 
-        case type == 'number':
-            input.type = type;
-            decorateInput(input, {type:type,placeholder:'Number',classList:['input-standard']})
+    //     case type == 'number':
 
-        break;
+    //     break;
 
-        case type == 'submit':
-            input.type = type;
-            decorateInput(input, {type:type,placeholder:undefined,classList:['submit-standard']})
+    //     case type == 'submit':
 
-        break;
+    //     break;
 
-        default: console.log(undefined);
-        break;
-    }
+    //     default: console.log(undefined);
+    //     break;
+    // }
+
+    
     // target question
     decorateInput(target_question, {type:'text',placeholder:'Enter a Question',classList:['input-question']})
 
-    target_element = target.getAttribute('data-element') == 'input' ? input : target.getAttribute('data-element') == 'textarea' ? textarea : console.log("check types");
-    target_element.name = "element_" + type;
-    target_question.name = "question_text"
-    selects.map(x=>x.classList.add('absolute-type-select'))
-    disableElement(target_element)
-
+    target_question.name = "field_"
+    console.log('hide type-selects')
+    selects.filter((_,u) => !_.classList.contains('no-pointer')).map(x=>x.classList.add('absolute-type-select'))
 
     // append target_element to the li
     parent_element.appendChild(target_question);
@@ -225,7 +233,6 @@ function disableElement(event){
 // require value
 function requireValue(event){
     const element = event.currentTarget || event;
-    console.log(element)
     element.setAttribute('required',true)
 }
 // enable element
@@ -314,10 +321,11 @@ async function handleSubmit(e){
     const iT = document.querySelectorAll('.input-standard'); // aq = input_type
     let payload = {};
     for(let i = 0; i < aq.length; i ++){
-        let [prop,val] = [aq[i].name + (i+1) ,!iT[i] ? 'textarea' : iT[i].getAttribute('type')] // temporary capture (will fork later);
+        let [prop,val] = [aq[i].name + (i+1) ,iT[i].getAttribute('data-input-id')] // temporary capture (will fork later);
         
+        // setup payload / object
         payload[prop] = {
-            value:aq[i].value,
+            query:aq[i].value,
             input_type:val
         };
     }
