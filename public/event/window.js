@@ -32,10 +32,21 @@ return null;
 let pos = {x:undefined,y:undefined};
 function handleScroll(e){
     // method
-    let scrollY = e.scrollY;
+    let scrollY = window.scrollY;
     pos.y = scrollY;
 
-    console.log(pos.y)
+    console.log(pos.y);
+
+    if(scrollY > document.body.scrollTop) {
+        document.getElementById('header').classList.add('fixed')
+        document.querySelector('#title-logo > h1').classList.add('blk-txt')
+    } else {
+        document.getElementById('header').classList.remove('fixed')
+        document.querySelector('#title-logo > h1').classList.remove('blk-txt')
+
+    }
+
+
 }
 function handleChange(e){
     // method
