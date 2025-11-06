@@ -137,7 +137,7 @@ function updateButton(target){
             }
     } else { // if minus
         console.log("minus!")
-
+        form.removeChild(submitbtn)
             let question = [...target.parentElement.previousSibling.children]
             .find(child => child.classList.contains('input-question'))||undefined
             

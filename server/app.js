@@ -35,8 +35,13 @@ app.route("/input-types").get((req, res) => {
 
 app.route('/form/create').post((req,res) => {
     // const {text,textarea,number} = req.body;
-    console.log(req.body)
-    res.json(req.body)
+    if(req.body && Object.keys(req.body).length > 0){
+      console.log(req.body)
+      res.json(req.body)
+    } else {
+      console.log('data not entered')
+      res.send('Data not entered')
+    }
 })
 // listen on app
 app.listen(port, () => {
