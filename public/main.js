@@ -129,17 +129,13 @@ function updateButton(target){
         // check if previous question is disabled
     if(button_count % 2 === 0) { // if plus
         row_lock = true;
-        form.removeChild(submitbtn)
-        console.log("add!")
-
-
+            form.appendChild(submitbtn)
             let question = [...target.parentElement.previousSibling.children]
             .find(child => child.classList.contains('input-question'))||undefined
             if(question){
                 enableElement(question);
             }
     } else { // if minus
-        form.appendChild(submitbtn)
         console.log("minus!")
 
             let question = [...target.parentElement.previousSibling.children]
@@ -254,8 +250,8 @@ let row_lock = false;
 
 // handle question
 function handleQuestion(e = document.querySelector('.input-question')){
-    console.log("ROW LOCK")
-    console.log(row_lock)
+    // console.log("ROW LOCK")
+    // console.log(row_lock)
     let target = e.currentTarget;
     let parent = target.parentElement;
     let button = [...parent.children].find(x=>x.classList.contains('add-input'))
@@ -264,14 +260,14 @@ function handleQuestion(e = document.querySelector('.input-question')){
         let newbutton = d.children[0];
         button.classList.add('hide-button');
         handleInputButton(newbutton)
+        row_lock = true;
     }
     if(target.value.length  < 1) {
+        console.log("value less than 1")
         if(document.getElementById('submit-btn'))form.removeChild(submitbtn)
         button.classList.remove('hide-button');
         removeFormItem();
         row_lock = false;
-
-        console.log(target)
     }
 }
 
@@ -280,7 +276,7 @@ function handleQuestion(e = document.querySelector('.input-question')){
 function appendFormItem(form){
   row_lock = false;
   const divcolumn = `<div class="form-col div-col">
-                    <img src="./media/add.png" class="add-input" alt="add or plus">
+                    <img src="./media/add.png" class="add-input no-highlight" alt="add or plus">
                 </div>`;
 
   const parser = new DOMParser();
@@ -302,7 +298,6 @@ function removeFormItem(){
             x.remove();
         };
         if(i === divs[1]){
-            console.log(x)
             // button reappears
             let [btn,question] = [[...x.children].find(y => y.classList.contains('add-input')),[...x.children].find(y => y.classList.contains('input-question'))]
             btn.classList.remove('hide-button')

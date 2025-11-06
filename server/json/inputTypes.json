@@ -16,23 +16,23 @@
         },
         "submit":{
             "t":"submit",
-            "disabled":true
+            "disabled":false
         },
         "checkbox":{
             "t":"checkbox",
-            "disabled":true
+            "disabled":false
         },
         "radio":{
             "t":"radio",
-            "disabled":true
+            "disabled":false
         },
         "email":{
             "t":"email",
-            "disabled":true
+            "disabled":false
         },
         "date":{
             "t":"date",
-            "disabled":true
+            "disabled":false
         }
     }
 }
