@@ -12,7 +12,7 @@ let button_count = 0;
 
 
 
-// 1 - client is required to add input
+// START - client is required to add input
 handleInputButton(document.querySelector('.add-input'))
 
 
@@ -28,8 +28,6 @@ window.onscroll = scroll;
 
 // handle input button click
 function handleInputButton(btn = document.querySelector('.add-input')){
-    // Calculate the scroll position needed to bring the bottom of the container into view
-    const scrollPosition = form.offsetTop + form.offsetHeight - window.innerHeight;
 
     // Scroll the window
     window.scrollTo(0, document.body.scrollHeight);
@@ -158,6 +156,9 @@ function updateButton(target){
 }
 // input type selection
 function inputTypeSelection(e){
+    // appaer submit button
+    submitbtn.classList.remove('hide-button')
+
     console.log('2. Input type selection')
 
     const target = e.currentTarget; // target
@@ -297,6 +298,7 @@ function appendFormItem(form){
 
   // append form items
     form.appendChild(divelement);
+    console.log('appending submit')
     form.appendChild(submitbtn)
 
   return divelement;

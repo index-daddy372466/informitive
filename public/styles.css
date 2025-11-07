@@ -34,15 +34,21 @@ body{
 #form-container{
     height:90%;
     width:90%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 #form {
-    width:100%;
+    padding:12px;
+    width:55%;
     display:flex;
     flex-direction: column;
     align-items: start;
     justify-content: start;
     overflow:hidden;
     gap:1rem;
+    border:.5px solid #fff;
     margin-bottom:4rem;
 }
 .form-col {
@@ -235,4 +241,28 @@ header{
     transform: scale(3); /* Grow the ripple */
     opacity: 0;         /* Fade out the ripple */
   }
+}
+
+
+@media screen and (max-width:960px) {
+    #form {
+        width:98.5%;
+    }
+
+    .type-select {
+        height:33px;
+        width:33px;
+    }
+    .form-col {
+        gap:8px;
+    }
+
+    /* inputs  */
+.input-question{
+    width:100%;
+    height:40px;
+    font-size:12pt;
+    padding:.5rem 0 0 .75rem;
+
+}
 }
