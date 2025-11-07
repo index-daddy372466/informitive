@@ -172,7 +172,6 @@ header{
 
 /* inputs  */
 .input-question{
-    /* transition:.25s; */
     color:#fff;
     width:100%;
     height:50px;
@@ -242,7 +241,9 @@ header{
     opacity: 0;         /* Fade out the ripple */
   }
 }
-
+.silent-border { 
+border:1.5px dotted white;
+}
 
 @media screen and (max-width:960px) {
     #form {

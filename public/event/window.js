@@ -1,4 +1,5 @@
-import { enableElement } from "../main.js";
+import { enableElement, editQuestion, disableElement } from "../main.js";
+const form = document.getElementById('form')
 export const events = {
     click: handleClick,
     resize: handleResize,
@@ -18,10 +19,19 @@ function handleClick(e){
     let last_button = document.querySelectorAll('.add-input')[document.querySelectorAll('.add-input').length - 1];
     let split_button = last_button.src.split`/`
     let source_name = split_button[split_button.length - 1].slice(0,-4);
-    if(target !== last_button && source_name == 'add') {
-        console.log('not equal to button')
-        last_question ? enableElement(last_question) : null;;
+    
+    if(last_question){
+        // if(target !== last_button && source_name == 'add') {
+        if(target !== last_button && source_name == 'add') {
+            console.log('not equal to button')
+            last_question ? enableElement(last_question) : null;
+        }
+
     }
+    console.log(last_question)
+    console.log(target)
+
+    // set last question
 
 
 }
@@ -34,8 +44,6 @@ function handleScroll(e){
     // method
     let scrollY = window.scrollY;
     pos.y = scrollY;
-
-    console.log(pos.y);
 
     if(scrollY > document.body.scrollTop) {
         document.getElementById('header').classList.add('fixed')
@@ -50,5 +58,13 @@ function handleScroll(e){
 }
 function handleChange(e){
     // method
-console.log('something changed')
+    // console.log('something changed')
+
+    // // gather input questions in an array
+    // const q = [...document.querySelectorAll('.input-question')]
+    // for(let i = 0; i < q.length; i++) { // iterate
+    //     console.log('1 question added to the domain')
+    //     console.log(q[i])
+    // }
+    return null;
 }

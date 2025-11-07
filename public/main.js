@@ -136,14 +136,20 @@ function updateButton(target){
             form.appendChild(submitbtn)
             let question = [...target.parentElement.previousSibling.children]
             .find(child => child.classList.contains('input-question'))||undefined
+            console.log(question)
+            editQuestion(question) // edit the question
+
             if(question){
                 enableElement(question);
             }
     } else { // if minus
-        console.log("minus!")
-        form.removeChild(submitbtn)
+            console.log("minus!")
+            if(document.getElementById('submit-btn')){
+                form.removeChild(document.getElementById('submit-btn'))
+            }
             let question = [...target.parentElement.previousSibling.children]
             .find(child => child.classList.contains('input-question'))||undefined
+            editQuestion(question,false) // disable edit on question
             
             if(question) {
                 console.log(question)
@@ -224,14 +230,27 @@ function inputTypeSelection(e){
 
     // if target_question value
     target_question.focus();
-    target_question.oninput = e => handleQuestion(e);
+    target_question.oninput = handleQuestion;
 }
 
 // disable element
-function disableElement(event){
+export function disableElement(event){
     const element = event.currentTarget || event;
     console.log(element)
     element.setAttribute('disabled',true)
+}
+// add dotted border to signal Edit
+export function editQuestion(e,bool){
+    const target =  e || e.currentTarget || undefined;
+    console.log(target)
+    if(bool === false) {
+        target.classList.remove('silent-border');
+        return;
+    }
+    
+    console.log('edit the question !')
+    target.classList.add('silent-border')
+
 }
 // require value
 function requireValue(event){
@@ -274,8 +293,9 @@ function handleQuestion(e = document.querySelector('.input-question')){
         if(document.getElementById('submit-btn'))form.removeChild(submitbtn)
         button.classList.remove('hide-button');
         removeFormItem();
-        row_lock = false;
+        row_lock = false
     }
+    
 }
 
 /*================================ */
