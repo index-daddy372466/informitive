@@ -28,6 +28,12 @@ window.onscroll = scroll;
 
 // handle input button click
 function handleInputButton(btn = document.querySelector('.add-input')){
+    // Calculate the scroll position needed to bring the bottom of the container into view
+    const scrollPosition = form.offsetTop + form.offsetHeight - window.innerHeight;
+
+    // Scroll the window
+    window.scrollTo(0, document.body.scrollHeight);
+
     let alllines = document.querySelectorAll('.add-input');
     button_count = 0;
     btn.addEventListener('click',generateInputByType)
@@ -274,6 +280,12 @@ function handleQuestion(e = document.querySelector('.input-question')){
 /*================================ */
 // append form item
 function appendFormItem(form){
+    // Calculate the scroll position needed to bring the bottom of the container into view
+    const scrollPosition = form.offsetTop + form.offsetHeight - window.innerHeight;
+
+    // Scroll the window
+    window.scrollTo(0, document.body.scrollHeight);
+
   row_lock = false;
   const divcolumn = `<div class="form-col div-col">
                     <img src="./media/add.png" class="add-input no-highlight" alt="add or plus">
